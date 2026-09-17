@@ -1,5 +1,6 @@
 package com.hosteleriapractica.backendpractica.service;
 
+import com.hosteleriapractica.backendpractica.dto.CrearMesaRequest;
 import com.hosteleriapractica.backendpractica.model.Mesa;
 import com.hosteleriapractica.backendpractica.repository.MesaRepository;
 import org.springframework.stereotype.Service;
@@ -17,5 +18,13 @@ public class MesaService {
 
     public List<Mesa> listarTodas() {
         return mesaRepository.findAll();
+    }
+    
+    public Mesa crear(CrearMesaRequest request) {
+        Mesa mesa = Mesa.builder()
+                .numero(request.numero())
+                .capacidad(request.capacidad())
+                .build();
+        return mesaRepository.save(mesa);
     }
 }

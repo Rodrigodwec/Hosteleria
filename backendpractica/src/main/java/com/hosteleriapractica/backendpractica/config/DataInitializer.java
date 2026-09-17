@@ -30,5 +30,18 @@ public class DataInitializer implements CommandLineRunner {
                     .build();
             usuarioRepository.save(admin);
         }
+        
+        if (usuarioRepository.findByUsername("camarero1").isEmpty()) {
+            Usuario camarero = Usuario.builder()
+                    .username("camarero1")
+                    .password(passwordEncoder.encode("camarero123"))
+                    .nombre("Juan Gómez")
+                    .rol(Rol.CAMARERO)
+                    .activo(true)
+                    .build();
+            usuarioRepository.save(camarero);
+        }
     }
+    
+    
 }
