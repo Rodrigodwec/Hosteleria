@@ -1,5 +1,6 @@
 package com.hosteleriapractica.backendpractica.service;
 
+import com.hosteleriapractica.backendpractica.exception.ApiException;
 import com.hosteleriapractica.backendpractica.model.*;
 import com.hosteleriapractica.backendpractica.repository.ComandaRepository;
 import com.hosteleriapractica.backendpractica.repository.MesaRepository;
@@ -119,7 +120,7 @@ public class ComandaService {
         boolean esAdmin = principal.getUsuario().getRol() == Rol.ADMIN;
         boolean esPropietario = comanda.getCamarero().getId().equals(principal.getId());
         if (!esAdmin && !esPropietario) {
-            throw new IllegalStateException("Solo el camarero asignado a esta mesa puede modificar la comanda");
+            throw ApiException.forbidden("Solo el camarero asignado a esta mesa puede modificar la comanda");
         }
     }
 }
