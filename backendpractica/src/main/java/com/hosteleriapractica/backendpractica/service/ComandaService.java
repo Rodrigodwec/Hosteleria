@@ -2,6 +2,7 @@ package com.hosteleriapractica.backendpractica.service;
 
 import com.hosteleriapractica.backendpractica.model.*;
 import com.hosteleriapractica.backendpractica.repository.ComandaRepository;
+import com.hosteleriapractica.backendpractica.repository.MesaRepository;
 import com.hosteleriapractica.backendpractica.repository.ProductoRepository;
 import com.hosteleriapractica.backendpractica.security.UserPrincipal;
 import org.springframework.stereotype.Service;
@@ -14,10 +15,12 @@ public class ComandaService {
 
     private final ComandaRepository comandaRepository;
     private final ProductoRepository productoRepository;
+    private final MesaRepository mesaRepository;
 
-    public ComandaService(ComandaRepository comandaRepository, ProductoRepository productoRepository) {
+    public ComandaService(ComandaRepository comandaRepository, ProductoRepository productoRepository, MesaRepository mesaRepository) {
         this.comandaRepository = comandaRepository;
         this.productoRepository = productoRepository;
+        this.mesaRepository = mesaRepository;
     }
 
     @Transactional
@@ -48,6 +51,68 @@ public class ComandaService {
         }
 
         return comandaRepository.save(comanda);
+    }
+    
+    @Transactional
+    public Comanda actualizarCantidad(Long comandaId, Long lineaId, int cantidad, UserPrincipal principal) {
+        Comanda comanda = comandaRepository.findById(comandaId)
+                .orElseThrow(() -> new IllegalStateException("Comanda no encontrada"));
+        verificarPermiso(comanda, principal);
+
+        LineaComanda linea = comanda.getLineas().stream()
+                .filter(l -> l.getId().equals(lineaId))
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("Línea no encontrada"));
+
+        linea.setCantidad(cantidad);
+        return comandaRepository.save(comanda);
+    }
+
+    @Transactional
+    public Comanda eliminarLinea(Long comandaId, Long lineaId, UserPrincipal principal) {
+        Comanda comanda = comandaRepository.findById(comandaId)
+                .orElseThrow(() -> new IllegalStateException("Comanda no encontrada"));
+        verificarPermiso(comanda, principal);
+
+        LineaComanda linea = comanda.getLineas().stream()
+                .filter(l -> l.getId().equals(lineaId))
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("Línea no encontrada"));
+
+        comanda.getLineas().remove(linea);
+        return comandaRepository.save(comanda);
+    }
+
+    @Transactional
+    public void eliminarComanda(Long comandaId, UserPrincipal principal) {
+        Comanda comanda = comandaRepository.findById(comandaId)
+                .orElseThrow(() -> new IllegalStateException("Comanda no encontrada"));
+        verificarPermiso(comanda, principal);
+
+        Mesa mesa = comanda.getMesa();
+        comandaRepository.delete(comanda);
+
+        mesa.setEstado(EstadoMesa.LIBRE);
+        mesa.setCamarero(null);
+        mesaRepository.save(mesa);
+    }
+
+    @Transactional
+    public Comanda cobrar(Long comandaId, UserPrincipal principal) {
+        Comanda comanda = comandaRepository.findById(comandaId)
+                .orElseThrow(() -> new IllegalStateException("Comanda no encontrada"));
+        verificarPermiso(comanda, principal);
+
+        comanda.setEstado(EstadoComanda.CERRADA);
+        comanda.setFechaCierre(java.time.LocalDateTime.now());
+        comanda = comandaRepository.save(comanda);
+
+        Mesa mesa = comanda.getMesa();
+        mesa.setEstado(EstadoMesa.LIBRE);
+        mesa.setCamarero(null);
+        mesaRepository.save(mesa);
+
+        return comanda;
     }
 
     private void verificarPermiso(Comanda comanda, UserPrincipal principal) {
