@@ -53,6 +53,6 @@ public class MesaService {
         mesa.setCamarero(camarero);
         mesaRepository.save(mesa);
 
-        return null;
+        return comanda;
     }
 }
