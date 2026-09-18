@@ -27,12 +27,12 @@ public class ComandaService {
     @Transactional
     public Comanda agregarLinea(Long comandaId, Long productoId, int cantidad, UserPrincipal principal) {
         Comanda comanda = comandaRepository.findById(comandaId)
-                .orElseThrow(() -> new IllegalStateException("Comanda no encontrada"));
+                .orElseThrow(() -> ApiException.notFound("Comanda no encontrada"));
 
         verificarPermiso(comanda, principal);
 
         Producto producto = productoRepository.findById(productoId)
-                .orElseThrow(() -> new IllegalStateException("Producto no encontrado"));
+                .orElseThrow(() -> ApiException.notFound("Producto no encontrado"));
 
         Optional<LineaComanda> existente = comanda.getLineas().stream()
                 .filter(l -> l.getProducto().getId().equals(productoId))
@@ -57,13 +57,13 @@ public class ComandaService {
     @Transactional
     public Comanda actualizarCantidad(Long comandaId, Long lineaId, int cantidad, UserPrincipal principal) {
         Comanda comanda = comandaRepository.findById(comandaId)
-                .orElseThrow(() -> new IllegalStateException("Comanda no encontrada"));
+                .orElseThrow(() -> ApiException.notFound("Comanda no encontrada"));
         verificarPermiso(comanda, principal);
 
         LineaComanda linea = comanda.getLineas().stream()
                 .filter(l -> l.getId().equals(lineaId))
                 .findFirst()
-                .orElseThrow(() -> new IllegalStateException("Línea no encontrada"));
+                .orElseThrow(() -> ApiException.notFound("Línea no encontrada"));
 
         linea.setCantidad(cantidad);
         return comandaRepository.save(comanda);
@@ -72,13 +72,13 @@ public class ComandaService {
     @Transactional
     public Comanda eliminarLinea(Long comandaId, Long lineaId, UserPrincipal principal) {
         Comanda comanda = comandaRepository.findById(comandaId)
-                .orElseThrow(() -> new IllegalStateException("Comanda no encontrada"));
+                .orElseThrow(() -> ApiException.notFound("Comanda no encontrada"));
         verificarPermiso(comanda, principal);
 
         LineaComanda linea = comanda.getLineas().stream()
                 .filter(l -> l.getId().equals(lineaId))
                 .findFirst()
-                .orElseThrow(() -> new IllegalStateException("Línea no encontrada"));
+                .orElseThrow(() -> ApiException.notFound("Línea no encontrada"));
 
         comanda.getLineas().remove(linea);
         return comandaRepository.save(comanda);
@@ -87,7 +87,7 @@ public class ComandaService {
     @Transactional
     public void eliminarComanda(Long comandaId, UserPrincipal principal) {
         Comanda comanda = comandaRepository.findById(comandaId)
-                .orElseThrow(() -> new IllegalStateException("Comanda no encontrada"));
+                .orElseThrow(() -> ApiException.notFound("Comanda no encontrada"));
         verificarPermiso(comanda, principal);
 
         Mesa mesa = comanda.getMesa();
@@ -101,7 +101,7 @@ public class ComandaService {
     @Transactional
     public Comanda cobrar(Long comandaId, UserPrincipal principal) {
         Comanda comanda = comandaRepository.findById(comandaId)
-                .orElseThrow(() -> new IllegalStateException("Comanda no encontrada"));
+                .orElseThrow(() -> ApiException.notFound("Comanda no encontrada"));
         verificarPermiso(comanda, principal);
 
         comanda.setEstado(EstadoComanda.CERRADA);

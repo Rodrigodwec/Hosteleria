@@ -1,6 +1,7 @@
 package com.hosteleriapractica.backendpractica.service;
 
 import com.hosteleriapractica.backendpractica.dto.CrearMesaRequest;
+import com.hosteleriapractica.backendpractica.exception.ApiException;
 import com.hosteleriapractica.backendpractica.model.Comanda;
 import com.hosteleriapractica.backendpractica.model.EstadoMesa;
 import com.hosteleriapractica.backendpractica.model.Mesa;
@@ -37,10 +38,10 @@ public class MesaService {
     
     public Comanda ocupar(Long mesaId, Usuario camarero) {
         Mesa mesa = mesaRepository.findById(mesaId)
-                .orElseThrow(() -> new IllegalStateException("Mesa no encontrada"));
+                .orElseThrow(() -> ApiException.notFound("Mesa no encontrada"));
 
         if (mesa.getEstado() == EstadoMesa.OCUPADA) {
-            throw new IllegalStateException("La mesa ya está ocupada");
+            throw ApiException.conflict("La mesa ya está ocupada");
         }
         
         Comanda comanda = Comanda.builder()
