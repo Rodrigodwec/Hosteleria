@@ -1,0 +1,47 @@
+<div class="login-page">
+  <mat-card class="login-card">
+    <mat-card-header>
+      <mat-card-title>
+        <mat-icon>restaurant</mat-icon>
+        Hostelería
+      </mat-card-title>
+      <mat-card-subtitle>Inicia sesión para continuar</mat-card-subtitle>
+    </mat-card-header>
+
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <mat-card-content>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Usuario</mat-label>
+          <input matInput formControlName="username" autocomplete="username" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Contraseña</mat-label>
+          <input
+            matInput
+            [type]="hidePassword() ? 'password' : 'text'"
+            formControlName="password"
+            autocomplete="current-password"
+          />
+          <button mat-icon-button matSuffix type="button" (click)="hidePassword.set(!hidePassword())">
+            <mat-icon>{{ hidePassword() ? 'visibility_off' : 'visibility' }}</mat-icon>
+          </button>
+        </mat-form-field>
+
+        @if (errorMessage()) {
+          <p class="error-message">{{ errorMessage() }}</p>
+        }
+      </mat-card-content>
+
+      <mat-card-actions>
+        <button mat-flat-button color="primary" class="full-width" type="submit" [disabled]="loading()">
+          @if (loading()) {
+            <mat-spinner diameter="20"></mat-spinner>
+          } @else {
+            Entrar
+          }
+        </button>
+      </mat-card-actions>
+    </form>
+  </mat-card>
+</div>
