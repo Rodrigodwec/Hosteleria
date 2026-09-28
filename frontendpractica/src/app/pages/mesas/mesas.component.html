@@ -1,0 +1,25 @@
+<h1>Mesas</h1>
+
+@if (loading()) {
+  <div class="loading">
+    <mat-spinner diameter="40"></mat-spinner>
+  </div>
+} @else {
+  <div class="mesas-grid">
+    @for (mesa of mesas(); track mesa.id) {
+      <mat-card class="mesa-card" (click)="onMesaClick(mesa)">
+        <div class="luz" [class.libre]="mesa.estado === 'LIBRE'" [class.ocupada]="mesa.estado === 'OCUPADA'"></div>
+        <mat-card-content>
+          <div class="numero">Mesa {{ mesa.numero }}</div>
+          <div class="estado">{{ mesa.estado === 'LIBRE' ? 'Libre' : 'Ocupada' }}</div>
+          @if (mesa.estado === 'OCUPADA') {
+            <div class="camarero">
+              <mat-icon inline="true">person</mat-icon>
+              {{ mesa.camareroNombre }}
+            </div>
+          }
+        </mat-card-content>
+      </mat-card>
+    }
+  </div>
+}
