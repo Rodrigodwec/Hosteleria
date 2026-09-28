@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { adminGuard } from './core/guards/admin.guard';
 import { authGuard } from './core/guards/auth.guard';
 import { loginGuard } from './core/guards/login.guard';
+import { ShellComponent } from './layout/shell/shell.component';
 
 export const routes: Routes = [
   {
@@ -11,6 +12,7 @@ export const routes: Routes = [
   },
   {
     path: '',
+    component:ShellComponent,
     canActivate: [authGuard],
     children: [
       { path: '', pathMatch: 'full', redirectTo: 'mesas' },

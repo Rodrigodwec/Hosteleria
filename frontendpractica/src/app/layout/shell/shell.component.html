@@ -1,0 +1,30 @@
+<mat-toolbar color="primary" class="toolbar">
+  <mat-icon>restaurant</mat-icon>
+  <span class="title">Hostelería</span>
+
+  <nav class="nav-links">
+    <a mat-button routerLink="/mesas" routerLinkActive="active-link">Mesas</a>
+    @if (authService.isAdmin()) {
+      <a mat-button routerLink="/admin/camareros" routerLinkActive="active-link">Camareros</a>
+      <a mat-button routerLink="/admin/productos" routerLinkActive="active-link">Menú</a>
+    }
+  </nav>
+
+  <span class="spacer"></span>
+
+  <button mat-button [matMenuTriggerFor]="userMenu">
+    <mat-icon>account_circle</mat-icon>
+    {{ authService.usuario()?.nombre }}
+  </button>
+  <mat-menu #userMenu="matMenu">
+    <div class="menu-role">{{ authService.usuario()?.rol }}</div>
+    <button mat-menu-item (click)="logout()">
+      <mat-icon>logout</mat-icon>
+      Cerrar sesión
+    </button>
+  </mat-menu>
+</mat-toolbar>
+
+<main class="content">
+  <router-outlet></router-outlet>
+</main>
