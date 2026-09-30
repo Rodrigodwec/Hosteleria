@@ -31,6 +31,12 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./pages/admin-camareros/admin-camareros.component').then((m) => m.AdminCamarerosComponent)
       },
+      {
+        path: 'admin/productos',
+        canActivate: [adminGuard],
+        loadComponent: () =>
+          import('./pages/admin-productos/admin-productos.component').then((m) => m.AdminProductosComponent)
+      }
     ]
   },
   { path: '**', redirectTo: 'login' }

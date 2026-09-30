@@ -18,8 +18,16 @@ export class ProductoService {
     return this.http.get<Producto[]>(this.baseUrl, { params });
   }
 
-crear(request: ProductoRequest): Observable<Producto> {
-  return this.http.post<Producto>(this.baseUrl, request);
-}
+  crear(request: ProductoRequest): Observable<Producto> {
+    return this.http.post<Producto>(this.baseUrl, request);
+  }
+
+  actualizar(id: number, request: ProductoRequest): Observable<Producto> {
+    return this.http.put<Producto>(`${this.baseUrl}/${id}`, request);
+  }
+
+  eliminar(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/${id}`);
+  }
 
 }
