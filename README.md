@@ -2,6 +2,8 @@
 
 Aplicación web full-stack de gestión de un restaurante/bar. Permite a los **camareros** llevar las mesas y las comandas en tiempo real, y a los **administradores** gestionar el personal y la carta. Desarrollada como proyecto de práctica con **Spring Boot** (backend) y **Angular** (frontend).
 
+> 📘 ¿Quieres entender el porqué de cada decisión de diseño, capa por capa? Consulta [ARQUITECTURA.md](ARQUITECTURA.md).
+
 ## 📋 Índice
 
 - [Características](#-características)
