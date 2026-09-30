@@ -13,6 +13,7 @@ Aplicación web full-stack de gestión de un restaurante/bar. Permite a los **ca
 - [Roles y permisos](#-roles-y-permisos)
 - [Estructura del proyecto](#-estructura-del-proyecto)
 - [Principales endpoints de la API](#-principales-endpoints-de-la-api)
+- [Documentación interactiva (Swagger)](#-documentación-interactiva-swagger)
 - [Notas de desarrollo](#-notas-de-desarrollo)
 
 ## ✨ Características
@@ -172,6 +173,15 @@ shared/       → componentes reutilizables (p. ej. diálogo de confirmación)
 | `POST` | `/api/comandas/{id}/cobrar` | Cierra la comanda y libera la mesa | Dueño de la comanda o Admin |
 | `GET` / `POST` / `PUT` / `DELETE` | `/api/usuarios` | CRUD de camareros | Solo Admin |
 | `GET` / `POST` / `PUT` / `DELETE` | `/api/productos` | CRUD del menú (`GET` es público para autenticados) | Solo Admin (excepto `GET`) |
+
+## 📖 Documentación interactiva (Swagger)
+
+Con el backend en marcha, la documentación completa de la API está disponible en:
+
+- **Swagger UI**: http://localhost:8081/swagger-ui.html
+- **OpenAPI (JSON)**: http://localhost:8081/v3/api-docs
+
+Para probar endpoints protegidos desde la propia interfaz: haz login en `/api/auth/login`, copia el `token` de la respuesta, pulsa **Authorize** (arriba a la derecha) y pégalo ahí. A partir de ese momento Swagger enviará el JWT en todas las peticiones de prueba que lances.
 
 ## 📝 Notas de desarrollo
 
