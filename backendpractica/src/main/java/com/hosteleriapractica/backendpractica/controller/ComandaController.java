@@ -50,4 +50,9 @@ public class ComandaController {
     public ComandaDto cobrar(@PathVariable Long id, @AuthenticationPrincipal UserPrincipal principal) {
         return ComandaDto.from(comandaService.cobrar(id, principal));
     }
+    
+    @GetMapping("/mesa/{mesaId}")
+    public ComandaDto obtenerPorMesa(@PathVariable Long mesaId) {
+        return ComandaDto.from(comandaService.obtenerActivaPorMesa(mesaId));
+    }
 }

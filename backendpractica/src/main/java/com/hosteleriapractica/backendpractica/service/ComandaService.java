@@ -123,4 +123,9 @@ public class ComandaService {
             throw ApiException.forbidden("Solo el camarero asignado a esta mesa puede modificar la comanda");
         }
     }
+    
+    public Comanda obtenerActivaPorMesa(Long mesaId) {
+        return comandaRepository.findByMesaIdAndEstado(mesaId, EstadoComanda.ABIERTA)
+                .orElseThrow(() -> ApiException.notFound("La mesa no tiene una comanda activa"));
+    }
 }
