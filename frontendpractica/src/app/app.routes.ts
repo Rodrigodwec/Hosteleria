@@ -24,7 +24,13 @@ export const routes: Routes = [
         path: 'mesas/:id',
         loadComponent: () =>
           import('./pages/mesa-detalle/mesa-detalle.component').then((m) => m.MesaDetalleComponent)
-      }
+      },
+      {
+        path: 'admin/camareros',
+        canActivate: [adminGuard],
+        loadComponent: () =>
+          import('./pages/admin-camareros/admin-camareros.component').then((m) => m.AdminCamarerosComponent)
+      },
     ]
   },
   { path: '**', redirectTo: 'login' }

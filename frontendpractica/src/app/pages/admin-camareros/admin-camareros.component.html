@@ -1,0 +1,47 @@
+<div class="page-header">
+  <h1>Camareros</h1>
+  <button mat-flat-button color="primary" (click)="nuevo()">
+    <mat-icon>add</mat-icon>
+    Nuevo camarero
+  </button>
+</div>
+
+<table mat-table [dataSource]="camareros()" class="mat-elevation-z1 full-width">
+  <ng-container matColumnDef="username">
+    <th mat-header-cell *matHeaderCellDef>Usuario</th>
+    <td mat-cell *matCellDef="let c">{{ c.username }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="nombre">
+    <th mat-header-cell *matHeaderCellDef>Nombre</th>
+    <td mat-cell *matCellDef="let c">{{ c.nombre }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="activo">
+    <th mat-header-cell *matHeaderCellDef>Estado</th>
+    <td mat-cell *matCellDef="let c">
+      <mat-chip [color]="c.activo ? 'primary' : 'warn'" selected>
+        {{ c.activo ? 'Activo' : 'Inactivo' }}
+      </mat-chip>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="acciones">
+    <th mat-header-cell *matHeaderCellDef>Acciones</th>
+    <td mat-cell *matCellDef="let c">
+      <button mat-icon-button (click)="editar(c)">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button mat-icon-button color="warn" (click)="eliminar(c)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="columnas"></tr>
+  <tr mat-row *matRowDef="let row; columns: columnas"></tr>
+</table>
+
+@if (camareros().length === 0) {
+  <p class="vacio">No hay camareros dados de alta todavía.</p>
+}
