@@ -91,7 +91,7 @@ export class AdminProductosComponent implements OnInit {
             this.snackBar.open('Producto eliminado', 'Cerrar', { duration: 2500 });
             this.cargar();
           },
-          error: () => this.snackBar.open('No se pudo eliminar el producto', 'Cerrar', { duration: 3000 })
+          error: (err) => this.snackBar.open(err.error?.message || 'No se pudo eliminar el producto', 'Cerrar', { duration: 3000 })
         });
       }
     });

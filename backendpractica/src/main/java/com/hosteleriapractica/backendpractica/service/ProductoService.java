@@ -8,7 +8,7 @@ import com.hosteleriapractica.backendpractica.dto.ProductoRequest;
 import com.hosteleriapractica.backendpractica.model.CategoriaProducto;
 import com.hosteleriapractica.backendpractica.model.Producto;
 import com.hosteleriapractica.backendpractica.repository.ProductoRepository;
-import com.hosteleriapractica.backendpractica.exception.ApiException
+import com.hosteleriapractica.backendpractica.exception.ApiException;
 
 @Service
 public class ProductoService {
