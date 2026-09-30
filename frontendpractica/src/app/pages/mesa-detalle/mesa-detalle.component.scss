@@ -1,0 +1,119 @@
+.volver-btn {
+  margin-bottom: 8px;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  padding: 48px;
+}
+
+.header-mesa {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 16px;
+
+  h1 {
+    margin: 0;
+  }
+}
+
+.info-camarero {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.solo-lectura {
+  font-style: italic;
+  margin-left: 4px;
+}
+
+.contenido {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 16px;
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.productos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.producto-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 12px;
+  height: auto;
+  line-height: 1.3;
+}
+
+.producto-nombre {
+  font-weight: 600;
+  white-space: normal;
+  text-align: left;
+}
+
+.producto-precio {
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 0.85rem;
+}
+
+.sin-productos,
+.sin-lineas {
+  color: rgba(0, 0, 0, 0.5);
+  font-style: italic;
+}
+
+.lineas {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.linea-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  background: white;
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+
+  &:hover:not(:disabled) {
+    background: rgba(25, 118, 210, 0.06);
+  }
+
+  &:disabled {
+    cursor: default;
+    opacity: 0.8;
+  }
+}
+
+.total {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin-top: 16px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.acciones {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 16px 16px;
+}

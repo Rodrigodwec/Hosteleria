@@ -1,0 +1,112 @@
+<button mat-button (click)="volver()" class="volver-btn">
+  <mat-icon>arrow_back</mat-icon>
+  Volver a mesas
+</button>
+
+@if (loading()) {
+  <div class="loading">
+    <mat-spinner diameter="40"></mat-spinner>
+  </div>
+} @else {
+  @if (comanda(); as comandaActual) {
+    <div class="header-mesa">
+      <h1>Mesa {{ comandaActual.mesaNumero }}</h1>
+      <div class="info-camarero">
+        <mat-icon inline="true">person</mat-icon>
+        {{ comandaActual.camareroNombre }}
+        @if (!puedeEditar) {
+          <span class="solo-lectura">(solo lectura)</span>
+        }
+      </div>
+    </div>
+
+    <div class="contenido">
+      <mat-card class="carta">
+        <mat-card-header>
+          <mat-card-title>Carta</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <mat-tab-group (selectedIndexChange)="onTabChange($event)">
+            @for (categoria of categorias; track categoria.valor) {
+              <mat-tab [label]="categoria.etiqueta"></mat-tab>
+            }
+          </mat-tab-group>
+
+          <div class="productos-grid">
+            @for (producto of productos(); track producto.id) {
+              <button
+                mat-stroked-button
+                class="producto-btn"
+                [disabled]="!puedeEditar || !producto.disponible"
+                (click)="agregarProducto(producto)"
+              >
+                <div class="producto-nombre">{{ producto.nombre }}</div>
+                <div class="producto-precio">{{ producto.precio | currency: 'EUR' }}</div>
+              </button>
+            }
+            @if (productos().length === 0) {
+              <p class="sin-productos">No hay productos en esta categoría</p>
+            }
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="comanda">
+        <mat-card-header>
+          <mat-card-title>Comanda</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          @if (comandaActual.lineas.length === 0) {
+            <p class="sin-lineas">Todavía no hay productos añadidos</p>
+          }
+          <div class="lineas">
+            @for (linea of comandaActual.lineas; track linea.id) {
+              <button
+                class="linea-item"
+                [matMenuTriggerFor]="opcionesMenu"
+                [disabled]="!puedeEditar"
+                (click)="abrirOpciones(linea)"
+              >
+                <span class="linea-nombre">{{ linea.cantidad }}x {{ linea.productoNombre }}</span>
+                <span class="linea-subtotal">{{ linea.subtotal | currency: 'EUR' }}</span>
+              </button>
+            }
+          </div>
+
+          <div class="total">
+            <span>Total</span>
+            <span>{{ comandaActual.total | currency: 'EUR' }}</span>
+          </div>
+        </mat-card-content>
+
+        @if (puedeEditar) {
+          <mat-card-actions class="acciones">
+            <button mat-stroked-button color="warn" (click)="eliminarComanda()">
+              <mat-icon>delete</mat-icon>
+              Eliminar comanda
+            </button>
+            <button mat-flat-button color="primary" (click)="cobrarMesa()">
+              <mat-icon>payments</mat-icon>
+              Cobrar mesa
+            </button>
+          </mat-card-actions>
+        }
+      </mat-card>
+    </div>
+
+    <mat-menu #opcionesMenu="matMenu">
+      <button mat-menu-item (click)="sumarUnidad()">
+        <mat-icon>add</mat-icon>
+        Sumar unidad
+      </button>
+      <button mat-menu-item (click)="restarUnidad()">
+        <mat-icon>remove</mat-icon>
+        Restar unidad
+      </button>
+      <button mat-menu-item (click)="eliminarLinea()">
+        <mat-icon>delete</mat-icon>
+        Eliminar producto
+      </button>
+    </mat-menu>
+  }
+}

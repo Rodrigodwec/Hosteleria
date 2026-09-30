@@ -20,6 +20,11 @@ export const routes: Routes = [
         path: 'mesas',
         loadComponent: () => import('./pages/mesas/mesas.component').then((m) => m.MesasComponent)
       },
+      {
+        path: 'mesas/:id',
+        loadComponent: () =>
+          import('./pages/mesa-detalle/mesa-detalle.component').then((m) => m.MesaDetalleComponent)
+      }
     ]
   },
   { path: '**', redirectTo: 'login' }
