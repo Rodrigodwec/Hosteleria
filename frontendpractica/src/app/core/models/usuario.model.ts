@@ -15,3 +15,15 @@ export interface LoginResponse {
   nombre: string;
   rol: Rol;
 }
+
+export interface CrearUsuarioRequest {
+  username: string;
+  password: string;
+  nombre: string;
+}
+
+export interface ActualizarUsuarioRequest {
+  nombre: string;
+  password?: string;
+  activo: boolean;
+}

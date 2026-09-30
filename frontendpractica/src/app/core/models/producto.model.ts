@@ -8,3 +8,11 @@ export interface Producto {
     categoria: CategoriaProducto;
     disponible: boolean | null;
 }
+
+export interface ProductoRequest {
+  nombre: string;
+  descripcion: string | null;
+  precio: number;
+  categoria: CategoriaProducto;
+  disponible: boolean;
+}
