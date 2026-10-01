@@ -1,0 +1,36 @@
+<div class="page-header">
+  <h1>Mesas</h1>
+  <button mat-flat-button color="primary" (click)="nueva()">
+    <mat-icon>add</mat-icon>
+    Nueva mesa
+  </button>
+</div>
+
+<table mat-table [dataSource]="mesas()" class="mat-elevation-z1 full-width">
+  <ng-container matColumnDef="numero">
+    <th mat-header-cell *matHeaderCellDef>Número</th>
+    <td mat-cell *matCellDef="let m">{{ m.numero }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="capacidad">
+    <th mat-header-cell *matHeaderCellDef>Capacidad</th>
+    <td mat-cell *matCellDef="let m">{{ m.capacidad ?? '—' }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="estado">
+    <th mat-header-cell *matHeaderCellDef>Estado</th>
+    <td mat-cell *matCellDef="let m">
+      <mat-chip [color]="m.estado === 'LIBRE' ? 'primary' : 'warn'" selected>
+        {{ m.estado === 'LIBRE' ? 'Libre' : 'Ocupada' }}
+      </mat-chip>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="camarero">
+    <th mat-header-cell *matHeaderCellDef>Camarero</th>
+    <td mat-cell *matCellDef="let m">{{ m.camareroNombre ?? '—' }}</td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="columnas"></tr>
+  <tr mat-row *matRowDef="let row; columns: columnas"></tr>
+</table>

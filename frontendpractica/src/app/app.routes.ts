@@ -36,7 +36,13 @@ export const routes: Routes = [
         canActivate: [adminGuard],
         loadComponent: () =>
           import('./pages/admin-productos/admin-productos.component').then((m) => m.AdminProductosComponent)
-      }
+      },
+      {
+        path: 'admin/mesas',
+        canActivate: [adminGuard],
+        loadComponent: () =>
+          import('./pages/admin-mesas/admin-mesas.component').then((m) => m.AdminMesasComponent)
+      },
     ]
   },
   { path: '**', redirectTo: 'login' }

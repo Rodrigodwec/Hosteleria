@@ -5,6 +5,7 @@
   <nav class="nav-links">
     <a mat-button routerLink="/mesas" routerLinkActive="active-link">Mesas</a>
     @if (authService.isAdmin()) {
+      <a mat-button routerLink="/admin/mesas" routerLinkActive="active-link">Mesas</a>
       <a mat-button routerLink="/admin/camareros" routerLinkActive="active-link">Camareros</a>
       <a mat-button routerLink="/admin/productos" routerLinkActive="active-link">Menú</a>
     }

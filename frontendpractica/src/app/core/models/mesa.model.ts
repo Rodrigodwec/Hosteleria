@@ -8,3 +8,8 @@ export interface Mesa {
     camareroId: number | null;
     camareroNombre: string | null;
 }
+
+export interface CrearMesaRequest {
+  numero: number;
+  capacidad: number | null;
+}
