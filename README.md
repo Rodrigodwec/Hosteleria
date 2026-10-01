@@ -129,7 +129,7 @@ Se crean automáticamente la primera vez que arranca el backend (si no existen y
 | Modificar una comanda propia | ✅ | ✅ |
 | Modificar una comanda de otro camarero | ❌ | ✅ |
 | Cobrar / eliminar una comanda (propia) | ✅ | ✅ |
-| Crear, editar y eliminar mesas | ❌ | ✅ |
+| Crear mesas nuevas | ❌ | ✅ |
 | Gestionar el menú (productos) | ❌ | ✅ |
 | Gestionar camareros | ❌ | ✅ |
 
@@ -165,6 +165,7 @@ shared/       → componentes reutilizables (p. ej. diálogo de confirmación)
 |---|---|---|---|
 | `POST` | `/api/auth/login` | Inicia sesión y devuelve un JWT | Público |
 | `GET` | `/api/mesas` | Lista todas las mesas | Autenticado |
+| `POST` | `/api/mesas` | Crea una mesa nueva | Solo Admin |
 | `POST` | `/api/mesas/{id}/ocupar` | Ocupa una mesa libre y abre una comanda | Autenticado |
 | `GET` | `/api/productos?categoria=` | Lista la carta, filtrable por categoría | Autenticado |
 | `GET` | `/api/comandas/mesa/{mesaId}` | Obtiene la comanda activa de una mesa | Autenticado |
