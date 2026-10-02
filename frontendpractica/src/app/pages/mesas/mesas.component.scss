@@ -2,28 +2,51 @@ h1 {
   margin-bottom: 16px;
 }
 
+.ayuda {
+  margin: -8px 0 16px;
+  color: rgba(0, 0, 0, 0.6);
+}
+
 .loading {
   display: flex;
   justify-content: center;
   padding: 48px;
 }
 
-.mesas-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-  gap: 16px;
+.plano {
+  position: relative;
+  height: 70vh;
+  min-height: 520px;
+  border: 2px dashed rgba(0, 0, 0, 0.25);
+  border-radius: 12px;
+  background-color: #fafafa;
+  background-image: radial-gradient(rgba(0, 0, 0, 0.08) 1px, transparent 1px);
+  background-size: 24px 24px;
+  overflow: hidden;
 }
 
 .mesa-card {
+  position: absolute;
+  width: 130px;
   cursor: pointer;
   text-align: center;
-  padding: 16px 8px;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  padding: 12px 8px;
+  user-select: none;
+  transition: box-shadow 0.15s ease;
+
+  &.arrastrable {
+    cursor: grab;
+  }
 
   &:hover {
-    transform: translateY(-2px);
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
   }
+}
+
+.mesa-card.cdk-drag-dragging {
+  cursor: grabbing;
+  z-index: 10;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.25);
 }
 
 .luz {

@@ -1,5 +1,6 @@
 package com.hosteleriapractica.backendpractica.controller;
 
+import com.hosteleriapractica.backendpractica.dto.ActualizarPosicionRequest;
 import com.hosteleriapractica.backendpractica.dto.ComandaDto;
 import com.hosteleriapractica.backendpractica.dto.CrearMesaRequest;
 import com.hosteleriapractica.backendpractica.dto.MesaDto;
@@ -14,6 +15,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -48,5 +50,11 @@ public class MesaController {
     public ComandaDto ocupar(@PathVariable Long id, @AuthenticationPrincipal UserPrincipal principal) {
         Comanda comanda = mesaService.ocupar(id, principal.getUsuario());
         return ComandaDto.from(comanda);
+    }
+    
+    @PutMapping("/{id}/posicion")
+    @PreAuthorize("hasRole('ADMIN')")
+    public MesaDto actualizarPosicion(@PathVariable Long id, @Valid @RequestBody ActualizarPosicionRequest request) {
+        return MesaDto.from(mesaService.actualizarPosicion(id, request));
     }
 }

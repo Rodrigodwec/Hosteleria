@@ -42,5 +42,11 @@ public class Mesa {
     @ManyToOne(fetch = FetchType.LAZY) //Muchas mesas pueden apuntar al mismo camarero, por eso es "muchos a uno" visto desde Mesa. @JoinColumn(name = "camarero_id") es la columna FK que se creará en la tabla mesas
     @JoinColumn(name = "camarero_id")
     private Usuario camarero;
+    
+    @Column(nullable = true)
+    private Double posX;
+
+    @Column(nullable = true)
+    private Double posY;
 
 }

@@ -8,7 +8,9 @@ public record MesaDto(
         Integer capacidad,
         String estado,
         Long camareroId,
-        String camareroNombre
+        String camareroNombre,
+        Double posX,
+        Double posY
 ) {
     public static MesaDto from(Mesa mesa) {
         return new MesaDto(
@@ -17,7 +19,9 @@ public record MesaDto(
                 mesa.getCapacidad(),
                 mesa.getEstado().name(),
                 mesa.getCamarero() != null ? mesa.getCamarero().getId() : null,
-                mesa.getCamarero() != null ? mesa.getCamarero().getNombre() : null
+                mesa.getCamarero() != null ? mesa.getCamarero().getNombre() : null,
+                mesa.getPosX(),
+                mesa.getPosY()
         );
     }
 }

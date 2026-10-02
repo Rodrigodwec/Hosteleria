@@ -1,5 +1,6 @@
 package com.hosteleriapractica.backendpractica.service;
 
+import com.hosteleriapractica.backendpractica.dto.ActualizarPosicionRequest;
 import com.hosteleriapractica.backendpractica.dto.CrearMesaRequest;
 import com.hosteleriapractica.backendpractica.exception.ApiException;
 import com.hosteleriapractica.backendpractica.model.Comanda;
@@ -33,6 +34,14 @@ public class MesaService {
                 .numero(request.numero())
                 .capacidad(request.capacidad())
                 .build();
+        return mesaRepository.save(mesa);
+    }
+    
+    public Mesa actualizarPosicion(Long id, ActualizarPosicionRequest request) {
+        Mesa mesa = mesaRepository.findById(id)
+                .orElseThrow(() -> ApiException.notFound("Mesa no encontrada"));
+        mesa.setPosX(request.posX());
+        mesa.setPosY(request.posY());
         return mesaRepository.save(mesa);
     }
     

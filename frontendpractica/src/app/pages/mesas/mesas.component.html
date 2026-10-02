@@ -1,13 +1,27 @@
 <h1>Mesas</h1>
 
+@if (esAdmin) {
+  <p class="ayuda">Arrastra las mesas para colocarlas como en el comedor. La posición se guarda al soltar.</p>
+}
+
 @if (loading()) {
   <div class="loading">
     <mat-spinner diameter="40"></mat-spinner>
   </div>
 } @else {
-  <div class="mesas-grid">
-    @for (mesa of mesas(); track mesa.id) {
-      <mat-card class="mesa-card" (click)="onMesaClick(mesa)">
+  <div class="plano">
+    @for (mesa of mesas(); track mesa.id; let i = $index) {
+      <mat-card
+        class="mesa-card"
+        [class.arrastrable]="esAdmin"
+        cdkDrag
+        cdkDragBoundary=".plano"
+        [cdkDragDisabled]="!esAdmin"
+        [style.left.%]="posicionX(mesa, i)"
+        [style.top.%]="posicionY(mesa, i)"
+        (cdkDragEnded)="onArrastreTerminado($event, mesa)"
+        (click)="onMesaClick(mesa)"
+      >
         <div class="luz" [class.libre]="mesa.estado === 'LIBRE'" [class.ocupada]="mesa.estado === 'OCUPADA'"></div>
         <mat-card-content>
           <div class="numero">Mesa {{ mesa.numero }}</div>

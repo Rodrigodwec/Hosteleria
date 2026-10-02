@@ -23,6 +23,7 @@ Aplicación web full-stack de gestión de un restaurante/bar. Permite a los **ca
 - Autenticación mediante **JWT** (sin sesiones, stateless)
 - Dos roles con permisos diferenciados: **Administrador** y **Camarero**
 - Vista de mesas con estado visual en tiempo real (libre / ocupada)
+- **Plano del comedor**: el administrador arrastra las mesas para colocarlas donde quiera y la posición queda guardada; los camareros ven el mismo plano sin poder moverlas
 - Al ocupar una mesa se abre una comanda asociada al camarero que la inicia
 - Carta organizada por categorías (Comida / Bebida / Postre)
 - Gestión de la comanda: añadir productos, sumar/restar unidades, eliminar líneas
@@ -130,6 +131,7 @@ Se crean automáticamente la primera vez que arranca el backend (si no existen y
 | Modificar una comanda de otro camarero | ❌ | ✅ |
 | Cobrar / eliminar una comanda (propia) | ✅ | ✅ |
 | Crear mesas nuevas | ❌ | ✅ |
+| Reorganizar el plano del comedor (arrastrar mesas) | ❌ | ✅ |
 | Gestionar el menú (productos) | ❌ | ✅ |
 | Gestionar camareros | ❌ | ✅ |
 
@@ -166,6 +168,7 @@ shared/       → componentes reutilizables (p. ej. diálogo de confirmación)
 | `POST` | `/api/auth/login` | Inicia sesión y devuelve un JWT | Público |
 | `GET` | `/api/mesas` | Lista todas las mesas | Autenticado |
 | `POST` | `/api/mesas` | Crea una mesa nueva | Solo Admin |
+| `PUT` | `/api/mesas/{id}/posicion` | Guarda la posición de la mesa en el plano (`posX`, `posY`, en % de 0 a 100) | Solo Admin |
 | `POST` | `/api/mesas/{id}/ocupar` | Ocupa una mesa libre y abre una comanda | Autenticado |
 | `GET` | `/api/productos?categoria=` | Lista la carta, filtrable por categoría | Autenticado |
 | `GET` | `/api/comandas/mesa/{mesaId}` | Obtiene la comanda activa de una mesa | Autenticado |
@@ -176,6 +179,16 @@ shared/       → componentes reutilizables (p. ej. diálogo de confirmación)
 | `POST` | `/api/comandas/{id}/cobrar` | Cierra la comanda y libera la mesa | Dueño de la comanda o Admin |
 | `GET` / `POST` / `PUT` / `DELETE` | `/api/usuarios` | CRUD de camareros | Solo Admin |
 | `GET` / `POST` / `PUT` / `DELETE` | `/api/productos` | CRUD del menú (`GET` es público para autenticados) | Solo Admin (excepto `GET`) |
+
+### Códigos de error
+
+| Código | Cuándo ocurre |
+|---|---|
+| `400` | Los datos enviados no cumplen las validaciones (el mensaje indica el campo que falla) |
+| `401` | Credenciales incorrectas en el login, o token ausente, inválido o caducado |
+| `403` | Estás autenticado pero no tienes permiso (p. ej. un camarero en un endpoint de admin, o sobre la comanda de otro camarero) |
+| `404` | El recurso no existe (mesa, producto, comanda...) |
+| `409` | Conflicto con el estado actual (mesa ya ocupada, usuario duplicado, producto en uso en comandas) |
 
 ## 📖 Documentación interactiva (Swagger)
 

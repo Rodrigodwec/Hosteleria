@@ -7,6 +7,8 @@ export interface Mesa {
     estado: EstadoMesa;
     camareroId: number | null;
     camareroNombre: string | null;
+    posX: number | null;
+    posY: number | null;
 }
 
 export interface CrearMesaRequest {
